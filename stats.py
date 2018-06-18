@@ -37,7 +37,7 @@ def mutualInformation(label:np.ndarray, x:np.ndarray):
 
     return metrics.mutual_info_score(label,x)
 
-def plotPCA(X:pd.DataFrame, Y:pd.Series, title="PCA of features", normalize = "min-max"):
+def plotPCA(X:pd.DataFrame, Y:pd.Series, title="PCA of features", normalize = "min-max",n=2):
     """
 
     :param X:
@@ -56,11 +56,11 @@ def plotPCA(X:pd.DataFrame, Y:pd.Series, title="PCA of features", normalize = "m
         X = StandardScaler().fit_transform(X)
         title += normalize
     PCAll = PCA().fit(X)
-    print(PCAll.explained_variance_ratio_)
+    # print(PCAll.explained_variance_ratio_)
 
     # u, s, vh = np.linalg.svd(X, full_matrices=False)
 
-    X = PCA(n_components=2).fit_transform(X)
+    X = PCA(n_components=n).fit_transform(X)
 
     min_x = np.min(X[:, 0])
     max_x = np.max(X[:, 0])

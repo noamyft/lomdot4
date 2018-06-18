@@ -11,7 +11,7 @@ import stats
 from TreePlot import plotTree
 
 import mainPreprocessing
-from clustering import plotKmeans
+from clustering import plotKmeans, clusterDistribution
 
 
 def chooseColumns(currCols,oldCols):
@@ -126,8 +126,8 @@ def main():
     # plotTree(estimator, x_train.columns, labelsForTree)
 
 
-    reduced_data  = stats.plotPCA(X=x_train,Y=y_train,title="PCA - RIGHT FEATURES",normalize=None)
-    reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES", normalize="min-max")
+    # reduced_data  = stats.plotPCA(X=x_train,Y=y_train,title="PCA - RIGHT FEATURES",normalize=None)
+    # reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES", normalize="min-max")
     # stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES", normalize="normal")
     #
     # stats.plotPCA(X=x_train_all, Y=y_train_all, title="PCA - ALL FEATURES",normalize=None)
@@ -135,12 +135,17 @@ def main():
     # stats.plotPCA(X=x_train_all, Y=y_train_all, title="PCA - ALL FEATURES", normalize="normal")
 
     # KMEANS trail
-    plotKmeans(reduced_data,Y=y_train)
+    # plotKmeans(x_train,Y=y_train)
+
     # plt.scatter(x_train.iloc[:,0],x_train.iloc[:,1],c=y_kmeans,s=50,cmap='viridis') # for 2-d
     # centers = k_means.cluster_centers_
     # plt.scatter(centers[:,0], centers[:,1],marker='X')
     # plt.show()
-
+    for i in range(2,15):
+        # reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES",
+        #                              n=i, normalize="min-max")
+        clusterDistribution(x_train, Y=y_train, k=i,clusModel='Agg')
+        # clusterDistribution(x_train, Y=y_train, k=i, clusModel='Spec')
 
 
 
