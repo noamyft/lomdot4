@@ -116,5 +116,5 @@ def clusterDistribution(X, Y, k=3, clusModel ='kmeans'):
     legend1 = plt.text(x=0,y=1750,s=clusterSize)
 
     plotName = title.format(clusModel+str(k))
-    plt.savefig(plotName, bbox_inches="tight")
+    plt.savefig("plot/" + plotName, bbox_inches="tight")
     plt.clf()
