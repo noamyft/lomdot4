@@ -4,6 +4,8 @@ from sklearn.cluster import KMeans,SpectralClustering,AgglomerativeClustering
 from sklearn.mixture import GaussianMixture
 import matplotlib.pyplot as plt
 
+import stats
+from generativeModel import calcDistances
 
 
 
@@ -86,17 +88,17 @@ def clusterDistribution(X, Y, k=3, clusModel ='kmeans'):
     :return:
     """
     if clusModel == 'kmeans':
-        kmeans = KMeans(n_clusters=k)
+        clf = kmeans = KMeans(n_clusters=k)
         y_pred = kmeans.fit_predict(X)
     elif clusModel == 'GMM':
-        gmm = GaussianMixture(n_components=k)
+        clf = gmm = GaussianMixture(n_components=k)
         gmm.fit(X)
         y_pred = gmm.predict(X)
     elif clusModel == 'Spec':
-        spec = SpectralClustering(k)
+        clf = spec = SpectralClustering(k)
         y_pred = spec.fit_predict(X)
     elif clusModel == 'Agg':
-        agg = AgglomerativeClustering(k)
+        clf = agg = AgglomerativeClustering(k)
         y_pred = agg.fit_predict(X)
 
     Y[clusModel] = y_pred
@@ -118,3 +120,14 @@ def clusterDistribution(X, Y, k=3, clusModel ='kmeans'):
     plotName = title.format(clusModel+str(k))
     plt.savefig("plot/" + plotName, bbox_inches="tight")
     plt.clf()
+
+    # print distances between clusters
+    print("distances between clusters for ", clusModel + str(k))
+    print(calcDistances(["cluster " + str(i) for i in range (0,k)], clf.cluster_centers_).to_string())
+
+    # plot clusters
+    labels_with_colors = np.array(["Blues", "Browns", "Purples", "Whites", "Pinks","Turquoises","Oranges","Yellows",
+                          "Greens", "Greys", "Reds"]*3)
+    stats.plotReductionDims(X=pd.DataFrame(X), Y=pd.Series(labels_with_colors[y_pred]),
+                  title="scatter cluster of "+clusModel + str(k), normalize="none",method="tsne",
+                            n=2, toShow=False, toSave= True)

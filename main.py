@@ -6,12 +6,12 @@ from sklearn.tree import tree
 from sklearn.cluster import KMeans
 
 
-
 import stats
 from TreePlot import plotTree
 
 import mainPreprocessing
 from clustering import plotKmeans, clusterDistribution
+from generativeModel import getMeanStdWithBayes
 
 
 def chooseColumns(currCols,oldCols):
@@ -141,12 +141,17 @@ def main():
     # centers = k_means.cluster_centers_
     # plt.scatter(centers[:,0], centers[:,1],marker='X')
     # plt.show()
+    clusterCols = ['Yearly_IncomeKFillByMean', 'Number_of_valued_Kneset_membersFillByMedian',
+                   'Overall_happiness_scoreFillByMean', 'Garden_sqr_meter_per_person_in_residancy_areaFillByMean',
+                   'Weighted_education_rankFillByMean', 'Will_vote_only_large_partyFillByMode_Maybe',
+                   'Will_vote_only_large_partyFillByMode_No', 'Will_vote_only_large_partyFillByMode_Yes']
     for i in range(2,15):
         # reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES",
         #                              n=i, normalize="min-max")
-        clusterDistribution(x_train, Y=y_train, k=i,clusModel='Agg')
+        clusterDistribution(x_train[clusterCols], Y=y_train, k=i,clusModel='kmeans')
         # clusterDistribution(x_train, Y=y_train, k=i, clusModel='Spec')
 
+    # getMeanStdWithBayes(x_train, y_train)
 
 
 

@@ -5,6 +5,7 @@ from sklearn import metrics
 
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_multilabel_classification
+from sklearn.manifold import TSNE
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import SVC
 from sklearn.preprocessing import LabelBinarizer, StandardScaler, MinMaxScaler
@@ -37,9 +38,15 @@ def mutualInformation(label:np.ndarray, x:np.ndarray):
 
     return metrics.mutual_info_score(label,x)
 
-def plotPCA(X:pd.DataFrame, Y:pd.Series, title="PCA of features", normalize = "min-max",n=2):
+
+def plotPCA(X: pd.DataFrame, Y: pd.Series, title="PCA of features", normalize="min-max", n=2):
+    return plotReductionDims(X,Y,title,normalize,"pca",n)
+
+def plotReductionDims(X: pd.DataFrame, Y: pd.Series, title="PCA of features",
+                      normalize="min-max", method="pca", n=2 , toShow=True, toSave=False):
     """
 
+    :param method:
     :param X:
     :param Y:
     :param title:
@@ -60,7 +67,10 @@ def plotPCA(X:pd.DataFrame, Y:pd.Series, title="PCA of features", normalize = "m
 
     # u, s, vh = np.linalg.svd(X, full_matrices=False)
 
-    X = PCA(n_components=n).fit_transform(X)
+    if method == "tsne":
+        X = TSNE(n_components=2).fit_transform(X)
+    elif method == "pca":
+        X = PCA(n_components=n).fit_transform(X)
 
     min_x = np.min(X[:, 0])
     max_x = np.max(X[:, 0])
@@ -99,7 +109,12 @@ def plotPCA(X:pd.DataFrame, Y:pd.Series, title="PCA of features", normalize = "m
     #     plt.xlabel('First principal component')
     #     plt.ylabel('Second principal component')
     #     plt.legend(loc="upper left")
-    plt.show()
+    if toShow:
+        plt.show()
+    if toSave:
+        plt.savefig("plot/" + title, bbox_inches="tight")
+
+    plt.clf()
     return X
 
 
