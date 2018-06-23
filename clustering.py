@@ -90,6 +90,7 @@ def clusterDistribution(X, Y, k=3, clusModel ='kmeans'):
     if clusModel == 'kmeans':
         clf = kmeans = KMeans(n_clusters=k)
         y_pred = kmeans.fit_predict(X)
+        # print(clf.cluster_centers_)
     elif clusModel == 'GMM':
         clf = gmm = GaussianMixture(n_components=k)
         gmm.fit(X)
@@ -115,7 +116,7 @@ def clusterDistribution(X, Y, k=3, clusModel ='kmeans'):
     plt.ylabel('Number of Voters')
     plt.legend(loc="center left", bbox_to_anchor=(1, 0.5))
     title += '.png'
-    legend1 = plt.text(x=0,y=1750,s=clusterSize)
+    legend1 = plt.text(x=0,y=-100,s=clusterSize)
 
     plotName = title.format(clusModel+str(k))
     plt.savefig("plot/" + plotName, bbox_inches="tight")
@@ -128,6 +129,7 @@ def clusterDistribution(X, Y, k=3, clusModel ='kmeans'):
     # plot clusters
     labels_with_colors = np.array(["Blues", "Browns", "Purples", "Whites", "Pinks","Turquoises","Oranges","Yellows",
                           "Greens", "Greys", "Reds"]*3)
+    ## method = "pca" or "tsne"
     stats.plotReductionDims(X=pd.DataFrame(X), Y=pd.Series(labels_with_colors[y_pred]),
-                  title="scatter cluster of "+clusModel + str(k), normalize="none",method="tsne",
+                  title="scatter cluster of "+clusModel + str(k), normalize="none",method="pca",
                             n=2, toShow=False, toSave= True)

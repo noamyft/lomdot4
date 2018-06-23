@@ -26,8 +26,8 @@ def getMeanStdWithBayes(x, y):
     for clas, meanstd in res.items():
         print("stats for: " + clas)
         for r in meanstd:
-            if r[2] <= 0.1:
-                print(r[0:3])
+            # if r[2] <= 0.1:
+            print(r[0:3])
 
     meanDifferences = calcDistances(clf.classes_.tolist(), clf.theta_)
 

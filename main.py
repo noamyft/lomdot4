@@ -10,6 +10,7 @@ import stats
 from TreePlot import plotTree
 
 import mainPreprocessing
+from changingCoalition import changeAndItsPrice
 from clustering import plotKmeans, clusterDistribution
 from generativeModel import getMeanStdWithBayes
 
@@ -126,33 +127,16 @@ def main():
     # plotTree(estimator, x_train.columns, labelsForTree)
 
 
-    # reduced_data  = stats.plotPCA(X=x_train,Y=y_train,title="PCA - RIGHT FEATURES",normalize=None)
-    # reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES", normalize="min-max")
-    # stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES", normalize="normal")
-    #
-    # stats.plotPCA(X=x_train_all, Y=y_train_all, title="PCA - ALL FEATURES",normalize=None)
-    # stats.plotPCA(X=x_train_all, Y=y_train_all, title="PCA - ALL FEATURES", normalize="min-max")
-    # stats.plotPCA(X=x_train_all, Y=y_train_all, title="PCA - ALL FEATURES", normalize="normal")
-
-    # KMEANS trail
-    # plotKmeans(x_train,Y=y_train)
-
-    # plt.scatter(x_train.iloc[:,0],x_train.iloc[:,1],c=y_kmeans,s=50,cmap='viridis') # for 2-d
-    # centers = k_means.cluster_centers_
-    # plt.scatter(centers[:,0], centers[:,1],marker='X')
-    # plt.show()
-    clusterCols = ['Yearly_IncomeKFillByMean', 'Number_of_valued_Kneset_membersFillByMedian',
-                   'Overall_happiness_scoreFillByMean', 'Garden_sqr_meter_per_person_in_residancy_areaFillByMean',
-                   'Weighted_education_rankFillByMean', 'Will_vote_only_large_partyFillByMode_Maybe',
-                   'Will_vote_only_large_partyFillByMode_No', 'Will_vote_only_large_partyFillByMode_Yes']
-    for i in range(2,15):
-        # reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES",
-        #                              n=i, normalize="min-max")
-        clusterDistribution(x_train[clusterCols], Y=y_train, k=i,clusModel='kmeans')
-        # clusterDistribution(x_train, Y=y_train, k=i, clusModel='Spec')
+    # for i in range(2,6):
+    #     # reduced_data = stats.plotPCA(X=x_train, Y=y_train, title="PCA - RIGHT FEATURES",
+    #     #                              n=i, normalize="min-max")
+    #     clusterDistribution(x_test, Y=y_test, k=i,clusModel='kmeans')
+    #     # clusterDistribution(x_train, Y=y_train, k=i, clusModel='Spec')
 
     # getMeanStdWithBayes(x_train, y_train)
 
+    # changeAndItsPrice(x_train,y_train)
+    changeAndItsPrice(x_test, y_test)
 
 
 
